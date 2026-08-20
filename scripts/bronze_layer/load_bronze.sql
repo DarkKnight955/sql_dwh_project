@@ -1,28 +1,9 @@
-/*
-Procedure: [bronze].[prc_load_bronze]
-Purpose: Loads raw (bronze) tables in the `data_warehouse` database from local CSV source files.
-
-Description:
-- For each bronze table in the CRM and ERP source groups, the procedure truncates the target table
-  and then performs a BULK INSERT from a CSV file (assumes first row is a header).
-- Measures and prints per-table duration and overall bronze-layer load duration.
-- Implements basic error handling in a TRY/CATCH block and prints error details.
-
-Important notes / warnings:
-- BULK INSERT reads files from the SQL Server host. Ensure the SQL Server service account
-  has read access to the paths used (these are local paths under the current user's OneDrive).
-- Each run TRUNCATES the target tables: existing data will be permanently removed before loading.
-  Do NOT run on production databases unless intended and backed up.
-- The procedure has no parameters; it operates on hard-coded file paths and table names.
-- Review file paths and permissions before executing.
-*/
-
 USE [data_warehouse]
 GO
-/****** Object:  StoredProcedure [bronze].[prc_load_bronze]    Script Date: 8/16/2026 10:09:58 AM ******/
-SET ANSI_NULLS ON;
+/****** Object:  StoredProcedure [bronze].[prc_load_bronze]    Script Date: 8/20/2026 1:27:47 PM ******/
+SET ANSI_NULLS ON
 GO
-SET QUOTED_IDENTIFIER ON;
+SET QUOTED_IDENTIFIER ON
 GO
 ALTER PROCEDURE [bronze].[prc_load_bronze]
 AS
@@ -183,8 +164,3 @@ BEGIN
     END CATCH
 
 END
-GO
-
--- Execute the updated procedure (run after the ALTER PROCEDURE to use the new tracing prints)
-EXECUTE bronze.prc_load_bronze;
-GO
